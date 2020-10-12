@@ -19,7 +19,9 @@ def run_data_retrieval(config_data_retrieval: dict) -> dict:
     """
     task_status = None
     task_result = None
+    retrieved_paths = None
     try:
+        print(config_data_retrieval)
         datasrc_files_directory = config_data_retrieval["file_path"]
         regex_filename = config_data_retrieval["filename"]
         list_datasrc_files_path = _get_data_source_files_path(datasrc_files_directory, regex_filename)
@@ -44,10 +46,17 @@ def _get_data_source_files_path(datasrc_directory: str, regex_filename: str) -> 
         ---------
              datasrc_regex_files (dict) : List of retrieved files
     """
+    print(datasrc_directory)
     list_all_files_directory = os.listdir(datasrc_directory)
+    print(list_all_files_directory)
     datasrc_regex_files = [
         f"{datasrc_directory}{file_name}"
         for file_name in list_all_files_directory
         if re.match(regex_filename, file_name)
     ]
+    print(datasrc_regex_files)
     return datasrc_regex_files
+
+
+#def get_list_of_files_in_dir(directory: str) -> list:
+#    list_files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
