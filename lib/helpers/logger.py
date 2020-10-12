@@ -11,14 +11,7 @@ class LocalFormatter(logging.Formatter):
 
 class Logger(logging.Logger):
     """
-    This is the custom logging module for the Lab Carrefour-Google.
-    First, import the logger in your script:
-
-    >>> from lab_helpers.logger import logger
-
-    And then simply log things as if you were using the python standard logging library.
-
-    >>> logger.info("This is an info")
+    This is the custom logging module
     """
 
     __instance = None
