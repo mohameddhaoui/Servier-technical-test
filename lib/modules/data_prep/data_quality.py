@@ -26,11 +26,11 @@ def run_data_quality_pipeline(df_file_path: str, dataquality_config: dict, depen
     if is_success(dependency):
         df_raw = load_data(df_file_path)
         result_quality_checks = _perform_df_quality_checks(df_raw, dataquality_config)
-        if all(res_quality_checks.values()):
+        if all(result_quality_checks.values()):
             task_status = SUCCESS_STATUS
 
     return generate_task_result(
-        task_id="data_quality", task_status=task_status, task_result=res_quality_checks
+        task_id="data_quality", task_status=task_status, task_result=result_quality_checks
     )
 
 
@@ -40,12 +40,12 @@ def _perform_df_quality_checks(df, dataquality_config: dict) -> dict:
     """
     quality_check_res = {}
     for check_op in dataquality_config.keys():
-        res_qualiy_check = _data_quality_task(df, check_op)
+        res_qualiy_check = _data_quality_task(df, check_op, dataquality_config)
         quality_check_res[check_op] = res_qualiy_check
     return quality_check_res
 
 
-def _data_quality_task(df, quality_check_op) -> bool:
+def _data_quality_task(df, quality_check_op, dataquality_config) -> bool:
     """
     Run a check operation on a dataframe
     """
