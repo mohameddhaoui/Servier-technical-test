@@ -5,7 +5,7 @@ import shutil
 import json
 from config import DATASRC_CONFIG_PATH
 
-def load_data(file_path, file_type="csv"):
+def load_data(file_path:str, file_type="csv":str)-> object :
     if file_type == "csv":
         df=pd.read_csv(file_path)
         return df
