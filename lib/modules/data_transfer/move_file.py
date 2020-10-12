@@ -1,7 +1,8 @@
 import os
 import shutil
-from lib.utils.tasks import generate_task_result, is_success
 from config import SUCCESS_STATUS
+
+from lib.utils.tasks import generate_task_result, is_success
 
 
 def run_move_file(source_path: str, destination_zone: str, dependency: dict):
