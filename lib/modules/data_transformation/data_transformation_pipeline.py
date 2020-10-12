@@ -1,5 +1,9 @@
-from lib.modules.data_transformation.data_processing import run_mentions_collection_pipeline
-def run_data_transformation(data_prep_output:dict) -> dict:
+from lib.modules.data_transformation.data_processing import (
+    run_mentions_collection_pipeline,
+)
+
+
+def run_data_transformation(data_prep_output: dict) -> dict:
     """
     Run data transformation pipeline
         Params:
