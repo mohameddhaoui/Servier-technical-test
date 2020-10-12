@@ -18,3 +18,6 @@ DATASRC_CONFIG_PATH = 'configurations/{}_datasrc_config.yaml'
 SUCCESS_STATUS = "success"
 
 QUALITY_CHECK_MANADATORY_TASKS= ["min_num_row","required_columns"]
+
+
+OUTPUT_JSON_NAME="drugs_all_mentions"
