@@ -8,7 +8,7 @@ datasource:
   description: pubmed data
   labels:
     confidency: C1
-    business_entity: SELLOUT
+    business_entity: Retail
     env: DEV
   pipeline:
     data_collection:
