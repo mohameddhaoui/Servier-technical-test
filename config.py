@@ -16,3 +16,5 @@ MENTIONS_SOURCES = ["clinical_trials","pubmed"]
 
 DATASRC_CONFIG_PATH = 'configurations/{}_datasrc_config.yaml'
 SUCCESS_STATUS = "success"
+
+QUALITY_CHECK_MANADATORY_TASKS= ["min_num_row","required_columns"]
