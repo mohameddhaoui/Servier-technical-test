@@ -4,7 +4,9 @@ from lib.utils.tasks import generate_task_result, is_success
 from config import SUCCESS_STATUS
 
 def run_move_file(source_path, destination_zone, dependency):
-
+    task_status =None
+    task_result = None
+    target_zone_filepath = None
     if is_success(dependency) :
         try:
             if (source_path[0] != "/"):
