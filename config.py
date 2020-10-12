@@ -16,3 +16,5 @@ SUCCESS_STATUS = "success"
 
 QUALITY_CHECK_MANADATORY_TASKS = ["min_num_row", "required_columns"]
 OUTPUT_JSON_FILENAME = "drugs_all_mentions"
+
+ID_RELATION = "id_mention_relation"
