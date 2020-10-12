@@ -1,5 +1,6 @@
 from lib.modules.data_exposition.mentions_structuration import run_mentions_reduction,export_all_mentions
 from lib.modules.data_exposition.mentions_indicators import get_journal_most_mentions
+from lib.helpers.logger import logger
 
 def run_data_exposition(data_transformation_output:dict):
     """
