@@ -2,7 +2,8 @@
 import pandas as pd
 import json
 from lib.utils.file import load_json, save_dict_to_json
-from config import EXPOSITION_ZONE_DIRECTORY, OUTPUT_JSON_FILENAME
+from config import EXPOSITION_ZONE_DIRECTORY
+from config import OUTPUT_JSON_FILENAME
 
 def run_mentions_reduction(data_transformation_output:dict):
     """
