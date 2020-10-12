@@ -1,0 +1,33 @@
+config_metadata:
+  author: "Mohamed Dhaoui"
+  description: "Config file for pubmed"
+  contact: "admin@admin.com"
+
+datasource:
+  name: pubmed
+  description: pubmed data
+  labels:
+    confidency: C1
+    business_entity: Retail
+    env: DEV
+  pipeline:
+    data_collection:
+      file_path: 'data/'
+      filename: '^(pubmed)(\.csv)$'
+      file_type: csv
+      file_options:
+        separator: ","
+        skip_lines: 0
+    data_quality:
+      min_num_row: 2
+      required_columns: ["id","title","date","journal"]
+    data_preprocessing:
+      column_transformation:
+          remove_nans:
+            columns: [title]
+          column_types:
+            id: str
+            title: str
+            date: date
+            journal: str
+          date_format: "%Y/%m/%d"

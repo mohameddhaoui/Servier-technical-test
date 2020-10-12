@@ -1,0 +1,14 @@
+.DS_Store
+.idea*
+.idea/*
+venv/*
+__pycache__/
+log.log
+secrets/*
+#data/*
+
+
+.coverage
+htmlcov
+.python-version
+.vscode
