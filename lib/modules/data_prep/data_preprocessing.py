@@ -56,9 +56,7 @@ def run_data_preprocessing_pipeline(
         )
 
 
-def _transform_data(
-    df_filepath: str, datasrc_name: str, data_preprocessing_config: dict
-) -> dict:
+def _transform_data(df_filepath: str, datasrc_name: str, data_preprocessing_config: dict) -> dict:
     """
     Run preprocessing transformation to dataframe columns
     """
@@ -81,17 +79,11 @@ def _transform_columns(df, data_preprocessing_config: dict):
     if "remove_nans" in data_preprocessing_config.keys():
         df = remove_nans(df, data_preprocessing_config["remove_nans"]["columns"])
     if "remove_special_char" in data_preprocessing_config.keys():
-        df = remove_special_char(
-            df, data_preprocessing_config["remove_special_char"]["columns"]
-        )
+        df = remove_special_char(df, data_preprocessing_config["remove_special_char"]["columns"])
     if "column_types" in data_preprocessing_config.keys():
-        for column_name, column_type in data_preprocessing_config[
-            "column_types"
-        ].items():
+        for column_name, column_type in data_preprocessing_config["column_types"].items():
             df = cast_one_column(df, column_name, column_type)
     if "column_rename" in data_preprocessing_config.keys():
-        for column_init_name, column_new_name in data_preprocessing_config[
-            "column_rename"
-        ].items():
+        for column_init_name, column_new_name in data_preprocessing_config["column_rename"].items():
             df = rename_one_column(df, column_init_name, column_new_name)
     return df
