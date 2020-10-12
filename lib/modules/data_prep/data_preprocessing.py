@@ -37,6 +37,8 @@ def run_data_preprocessing_pipeline(
 
     """
     if is_success(dependency):
+        task_status = None
+        task_result = None
         try:
             df_data_transformation = _transform_data(
                 df_filepath, datasrc_name, data_preprocessing_config
