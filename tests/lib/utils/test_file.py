@@ -1,5 +1,4 @@
 import pytest
-import pdb
 
 YAML_LOAD_TEST_RETURN = "yaml_loaded"
 SCOPE = "function"
@@ -23,7 +22,6 @@ def fxt_builtin_open_import(mocker):
 
 def test_load_yaml(fxt_yaml_import, fxt_builtin_open_import):
     from lib.utils.file import load_yaml
-
     my_path = "this is a test path"
     res = load_yaml(my_path)
     assert res == YAML_LOAD_TEST_RETURN
