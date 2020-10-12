@@ -1,8 +1,7 @@
 import pandas as pd
 import json
 from lib.utils.file import load_json, save_dict_to_json
-from config import EXPOSITION_ZONE_DIRECTORY
-from config import OUTPUT_JSON_FILENAME
+from config import EXPOSITION_ZONE_DIRECTORY, OUTPUT_JSON_FILENAME, ID_RELATION
 
 
 def run_mentions_reduction(data_transformation_output: dict):
@@ -22,7 +21,7 @@ def export_all_mentions(df_all_mentions):
     """
     Export the dataframe of all mentions into json
     """
-    df_mentions_todict = df_all_mentions.set_index("id_mention_relation").to_dict(
+    df_mentions_todict = df_all_mentions.set_index(ID_RELATION).to_dict(
         orient="index"
     )
     output_path = f"{EXPOSITION_ZONE_DIRECTORY}/{OUTPUT_JSON_FILENAME}.json"
