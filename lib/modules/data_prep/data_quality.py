@@ -4,8 +4,23 @@ from lib.utils.file import load_data
 from config import SUCCESS_STATUS
 from lib.utils.tasks import is_success, generate_task_result
 
-def run_data_quality_pipeline(df_file_path, dataquality_config, dependency):
+def run_data_quality_pipeline(df_file_path:str, dataquality_config:dict, dependency:dict) -> dict:
+   """
+    Run Data quality Pipeline : basic quality check on data
+
+        Params:
+        --------
+             df_file_path (str) : filepath to check
+             dataquality_config (dict) : quality check dictionary
+             dependency (dict) : dependant task result
+
+        Returns:
+        ---------
+             data_retrieval_result (dict) : A dictionary containing the retreved filepaths
+
+    """
     task_status = None
+    task_result = None
     if is_success(dependency):
         result_check_row = True
         result_required_columns= True
