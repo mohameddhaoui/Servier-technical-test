@@ -85,12 +85,13 @@ Le fichier json se trouvera dans `./data/exposition/drugs_all_mentions.json` et 
 > (fichiers de plusieurs To ou millions de fichiers par exemple) ?
 
  Pour pouvoir traiter des grosses volumétries des données, on peut envisager les améliorations suivantes :
- - Ajout de la feature de lecture et traitement en chunk des données
+ - Ajout de la feature de lecture et traitement en chunk des données : On peut utiliser la librairie Dask pour la lecture en chunk ou en utilisant pandas.read() avec les attributs `chunksize` et `low_memory`
+
  - Utiliser un mécanisme de mapreduce manuel : on découpe les fichiers sources ( pubmed et clinical_trials ) en plusieurs fichiers de taille gérable , on lance le traitement par fichiers  et on prévoit une brique de reduce et de fusion avant la couche d'exposition
  - On utilise des bibliothèques/framework de traitement parallèle des dataframes et des données : (Dask, Rapids, Numba), Pyspark
- - On utilise des outils cloud managés pour l'éxecution de étapes de workflow ( kubernetes, Dataflow )
+ - On utilise des outils cloud managés pour l'éxecution de étapes de workflow ( kubernetes, Dataflow ). A titre d'exemple, pour kubernetes,  on peut découper un gros fichier en plusieurs fichiers, indexer les fichiers dans une bases accessibles à tous  les pods de kubernetes : Ensuite déployer plusieurs jobs de traitement: chaque job prend une liste de fichiers, les traite et met à jour la base pour stocker le statut de traitement de chaque fichier
 
-Pour le traitement de millions de fichiers, il faut rendre les briques du pipeline le plus `stateless` possible et découpler au maximum les étapes ( architecture `micro-services` ) . Cela permettra d'utiliser des briques de traitement serverless par un/groupe de fichiers  ( lambda function, cloud function, cloud ru ...)
+Pour le traitement de millions de fichiers, il faut rendre les briques du pipeline le plus `stateless` possible et découpler au maximum les étapes ( architecture `micro-services` ) . Cela permettra d'utiliser des briques de traitement serverless par un/groupe de fichiers  ( lambda function, cloud function, cloud run ...).
 
 
 ## 5- Réponses aux questions  de la section SQL:
