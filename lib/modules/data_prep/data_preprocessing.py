@@ -16,15 +16,17 @@ def run_data_preprocessing_pipeline(df_filepath:str, datasrc_name:str, data_prep
              datasrc_name (str) : name of datasource
              data_preprocessing_config (dict) : preprocessing dictionary
              dependency (dict) : dependant task result
+             output_directory(str) : output directory for preprocessed files
+             dependency(dict) : dependent task
 
         Returns:
         ---------
-             result_quality_checks (dict) : A dictionary containing the quality check operations result
+             output_preprocessed_filepath (dict) : filepath of preprocessed filepaths
 
     """
     if is_success(dependency) :
         try:
-            df_data_transformation= transform_data(df_filepath, datasrc_name, data_preprocessing_config)
+            df_data_transformation= _transform_data(df_filepath, datasrc_name, data_preprocessing_config)
             output_preprocessed_filepath = f"{output_directory}{os.path.basename(df_filepath)}"
             save_df(df_data_transformation, output_preprocessed_filepath)
             task_result = output_preprocessed_filepath
@@ -35,16 +37,22 @@ def run_data_preprocessing_pipeline(df_filepath:str, datasrc_name:str, data_prep
 
 
 
-def transform_data(df_filepath, datasrc_name, data_preprocessing_config):
+def _transform_data(df_filepath:str, datasrc_name:str, data_preprocessing_config:dict) -> dict:
+    """
+    Run preprocessing transformation to dataframe columns
+    """
     df_data_transformation= load_data(df_filepath)
     if "column_transformation" in data_preprocessing_config.keys():
-        df_data_transformation=transform_columns(df_data_transformation,
+        df_data_transformation=_transform_columns(df_data_transformation,
                                                 data_preprocessing_config=data_preprocessing_config["column_transformation"])
     df_data_transformation["type"] = datasrc_name
     return df_data_transformation
 
 
-def transform_columns(df, data_preprocessing_config):
+def _transform_columns(df, data_preprocessing_config:dict):
+    """
+    Run columns transformation
+    """
     if "remove_nans" in data_preprocessing_config.keys():
         df = remove_nans(df, data_preprocessing_config["remove_nans"]["columns"])
     if "remove_special_char" in data_preprocessing_config.keys():
