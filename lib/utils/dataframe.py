@@ -38,14 +38,15 @@ def remove_special_char(df,list_columns):
         df[colname].apply(lambda x:remove_str_special_char(x))
     return df
 
-def remove_str_special_char(str_init:str):
+def remove_str_special_char(str_init:str) -> str:
     """
     transform special char in a string
     """
+    str_f = str_init
     try:
         str_init = unidecode.unidecode(str_init)
         str_init=codecs.decode(str_init, 'unicode_escape')
-        str_f=re.sub(r'[^A-Za-z0-9 ]+', '', str_f)
+        str_f=re.sub(r'[^A-Za-z0-9 ]+', '', str_init)
     except Exception as e:
         print(e)
     return str_f
