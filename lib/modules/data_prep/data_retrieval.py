@@ -30,7 +30,18 @@ def run_data_retrieval(config_data_retrieval : dict) -> dict:
     return generate_task_result(task_id="data_retrieval",task_status=task_status, task_result=retrieved_paths)
 
 
-def get_data_source_files_path(datasrc_directory: str, regex_filename: str):
+def get_data_source_files_path(datasrc_directory: str, regex_filename: str) -> list:
+    """
+    Return list of files in a directory corresponding to a regex
+        Params:
+        --------
+             datasrc_directory (str) : A directory to look for files into
+             regex_filename (str) : regex to retrieve files
+
+        Returns:
+        ---------
+             datasrc_regex_files (dict) : List of retrieved files
+    """
     list_all_files_directory = os.listdir(datasrc_directory)
     datasrc_regex_files = [f"{datasrc_directory}{file_name}"
                            for file_name in list_all_files_directory if re.match(regex_filename, file_name)]
