@@ -46,14 +46,15 @@ def run_datasrc_dataprep_pipeline(config_datasrc:dict)-> dict:
 
     print("running data retrieval")
     data_retrieval_result = run_data_retrieval(config_data_retrieval)
-
+    print(data_retrieval_result)
     print("move file to quarantine")
     move_to_quarantine_result = run_move_file(source_path= data_retrieval_result["task_result"], destination_zone=QUARANTINE_ZONE_DIRECTORY, dependency=data_retrieval_result)
-
+    print(move_to_quarantine_result)
     print("run quality check")
     #print(move_to_quarantine_result)
     dataquality_config = config_datasrc["datasource"]["pipeline"]["data_quality"]
     data_quality_result = run_data_quality_pipeline(move_to_quarantine_result["task_result"], dataquality_config, dependency=move_to_quarantine_result)
+    print(data_quality_result)
 
     print("run data preprocessing")
     data_preprocessing_config = config_datasrc["datasource"]["pipeline"]["data_preprocessing"]
