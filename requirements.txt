@@ -1,0 +1,4 @@
+pylint==2.4.4
+pylint-fail-under
+pytest
+pytest-mock
