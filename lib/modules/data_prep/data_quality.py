@@ -25,7 +25,7 @@ def run_data_quality_pipeline(df_file_path: str, dataquality_config: dict, depen
     result_quality_checks = None
     if is_success(dependency):
         df_raw = load_data(df_file_path)
-        result_quality_checks = perform_df_quality_checks(df_raw, dataquality_config)
+        result_quality_checks = _perform_df_quality_checks(df_raw, dataquality_config)
         if all(res_quality_checks.values()):
             task_status = SUCCESS_STATUS
 
@@ -34,7 +34,7 @@ def run_data_quality_pipeline(df_file_path: str, dataquality_config: dict, depen
     )
 
 
-def perform_df_quality_checks(df, dataquality_config: dict) -> dict:
+def _perform_df_quality_checks(df, dataquality_config: dict) -> dict:
     """
     Run a list of check operation on a dataframe
     """
@@ -51,9 +51,9 @@ def _data_quality_task(df, quality_check_op) -> bool:
     """
     if quality_check_op in QUALITY_CHECK_MANADATORY_TASKS:
         if quality_check_op == "min_num_row":
-            res_quality_check_op = check_min_row(df, dataquality_config["min_num_row"])
+            res_quality_check_op = _check_min_row(df, dataquality_config["min_num_row"])
         if quality_check_op == "required_columns":
-            res_quality_check_op = check_required_columns(df, dataquality_config["required_columns"])
+            res_quality_check_op = _check_required_columns(df, dataquality_config["required_columns"])
         return res_quality_check_op
     else:
         raise ValueError(
@@ -61,14 +61,14 @@ def _data_quality_task(df, quality_check_op) -> bool:
         )
 
 
-def check_min_row(df, min_num_row) -> bool:
+def _check_min_row(df, min_num_row) -> bool:
     """
     Check if a dataframe has at least min_num_row observations
     """
     return df.shape[0] >= min_num_row
 
 
-def check_required_columns(df, required_columns) -> bool:
+def _check_required_columns(df, required_columns) -> bool:
     """
     Check if all required columns exist in a dataframe
     """
