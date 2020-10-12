@@ -43,7 +43,7 @@ une observation dans le fichier json produit a le format ci-dessous:
     {"id_relation": "id_mention", "date", "journal","type", "drug_name', "drug_attcode"}
     id_relation : une clé composée de l'id de mention avec l'id du drug  id_mention : l'id de titre contenant la mention du drug date : date  de mention journal : journal qui a mentionné le drug type : type de  mention, soit "pubmed" , soit "clinical_trials"
 
-**Le format de json proposée permet de :**
+**Le format de json proposé permet de :**
 - Connaitre les relations des médicaments avec les pubmed , en filtrant sur le champ `type`
 - Connaitre  les  relations des médicaments avec les clinical_trials , en filtrant sur le champ `type`
 - Connaitre les relations des medicaments avec les journaux, en utilisant  les champs `journal`, `date` et `drug_name`
@@ -62,9 +62,10 @@ Ce traitement peut etre exécuté en parallèle/en chunk par type de fichiers ( 
 - **Data transformation** : Le code principal de ce traitement se trouve dans `lib/modules/data_transformation/data_transformation_pipeline.py`. On se contente de traiter les les fichiers générés par la dataprep pour générer un json par type de relation ( "clinical_trials", "pubmed")
 - **Data Exposition** : Le code principal de ce traitement se trouve dans `/lib/modules/data_exposition/data_exposition_pipeline.py` : On récupère les données transformées, on le traite , fusionne et exporte sous un format json. On calcule ensuite les indicateurs de la section `4. Traitement ad-hoc`, dans notre cas c'est le journal contenant le plus de mentions d'articles différents
 
-## 3- Comment executer le script
+## 3- Comment exécuter le script
 Pour pouvoir executer le script :
  - Il faut set un virtualenv et l'activer
+ - Installer les librairies nécessaires : `make requirements`
  - Nettoyer les fichiers d'outputs existants :  `make init_pipeline`
 - Exécuter le pipeline : `make run_pipeline`
 
@@ -74,7 +75,7 @@ Le résultat aura cette forme :
 > './data/exposition//drugs_all_mentions.json'},
 > {'journal_max_mentions': 'Psychopharmacology'})
 
-Le fichier json se trouvera dans `./data/exposition//drugs_all_mentions.json` et le journal ayant le plus de mentions est `Psychopharmacology`
+Le fichier json se trouvera dans `./data/exposition/drugs_all_mentions.json` et le journal ayant le plus de mentions est `Psychopharmacology`
 
 ## 4- Réponses aux questions  de la section "Python et Data Engineering"
 
