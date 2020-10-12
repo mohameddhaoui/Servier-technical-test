@@ -1,8 +1,8 @@
 import pandas as pd
-from lib.utils.file import load_data
 from config import SUCCESS_STATUS
 from config import QUALITY_CHECK_MANADATORY_TASKS
 from lib.utils.tasks import is_success, generate_task_result
+from lib.utils.file import load_data
 
 
 def run_data_quality_pipeline(df_file_path: str, dataquality_config: dict, dependency: dict) -> dict:
