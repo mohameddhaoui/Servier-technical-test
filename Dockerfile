@@ -30,4 +30,4 @@ ADD config.py /app/config.py
 USER $APP_USER
 WORKDIR $APP_PATH
 
-CMD $APP_PATH/bin/run_drugs_relations_pipeline.py
+CMD [$APP_PATH/bin/run_drugs_relations_pipeline.py, "-flag"]
