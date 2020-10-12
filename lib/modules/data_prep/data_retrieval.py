@@ -5,6 +5,18 @@ from config import SUCCESS_STATUS
 from lib.utils.tasks import generate_task_result
 
 def run_data_retrieval(config_data_retrieval : dict) -> dict:
+    """
+    Run Data Retrieval Pipeline : retrieve all files for a given datasrc config
+
+        Params:
+        --------
+             config_data_retrieval (dict) : A  data retreiva config dictionary for a given data source
+
+        Returns:
+        ---------
+             data_retrieval_result (dict) : A dictionary containing the retreved filepaths
+
+    """
     task_status = None
     task_result = None
     try :
@@ -18,7 +30,7 @@ def run_data_retrieval(config_data_retrieval : dict) -> dict:
     return generate_task_result(task_id="data_retrieval",task_status=task_status, task_result=retrieved_paths)
 
 
-def get_data_source_files_path(datasrc_directory, regex_filename):
+def get_data_source_files_path(datasrc_directory: str, regex_filename: str):
     list_all_files_directory = os.listdir(datasrc_directory)
     datasrc_regex_files = [f"{datasrc_directory}{file_name}"
                            for file_name in list_all_files_directory if re.match(regex_filename, file_name)]
