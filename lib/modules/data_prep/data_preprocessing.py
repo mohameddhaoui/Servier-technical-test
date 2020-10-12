@@ -1,4 +1,5 @@
 import os
+from config import SUCCESS_STATUS
 from lib.utils.file import load_data, save_df
 from lib.utils.dataframe import (
     rename_one_column,
@@ -8,7 +9,6 @@ from lib.utils.dataframe import (
     remove_str_special_char,
 )
 from lib.utils.tasks import generate_task_result, is_success
-from config import SUCCESS_STATUS
 
 
 def run_data_preprocessing_pipeline(
