@@ -22,12 +22,8 @@ def run_data_retrieval(config_data_retrieval: dict) -> dict:
     try:
         datasrc_files_directory = config_data_retrieval["file_path"]
         regex_filename = config_data_retrieval["filename"]
-        list_datasrc_files_path = _get_data_source_files_path(
-            datasrc_files_directory, regex_filename
-        )
-        retrieved_paths = list_datasrc_files_path[
-            0
-        ]  # here we suppose we have only one file for each datasrc
+        list_datasrc_files_path = _get_data_source_files_path(datasrc_files_directory, regex_filename)
+        retrieved_paths = list_datasrc_files_path[0]  # here we suppose we have only one file for each datasrc
         task_status = SUCCESS_STATUS
     except Exception as e:
         task_status = e
