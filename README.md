@@ -26,18 +26,18 @@ Le repo est organisé comme ci-dessous :
 -----------
 
 Le point d'entrée du repo est le fichier `run_drugs_relations_pipeline.py`,  permet de déclencher le data pipeline de génération du json contenant les relations des  drugs avec les journaux et les pubmed. Le pipeline exécute les traitements suivants :
-- **La data préparation** : retrouver les fichiers sources à traiter, les transférer dans une zone quarantaine, vérifier leurs qualités et les pré-processer. Le résultat de cette étape sera sauvegardé dans le dossier `data/preprocessed` et on obtient comme output les paths de ces fichiers.
+- **La data préparation** :Retrouver les fichiers sources à traiter, les transférer dans une zone quarantaine, vérifier leurs qualités et les pré-processer. Le résultat de cette étape sera sauvegardé dans le dossier `data/preprocessed` et on obtient comme output les paths de ces fichiers.
 Exemple de format d'output
 > {'drugs': './data/preprocessed/drugs.csv', 'clinical_trials':
 > './data/preprocessed/clinical_trials.csv', 'pubmed':
 > './data/preprocessed/pubmed.csv'}
 
-- **La data transformation** :  on charge les données pré-processées et générées par l'étape précédente et on applique une série des traitement pour produire un json contenant les relations des drugs avec `pubmed`et un autre pour les relations avec `clinical_trials`
+- **La data transformation** :  on charge les données pré-processées et générées par l'étape précédente et on applique une série des traitement pour produire un premier json contenant les relations des drugs avec `pubmed`et un autre pour les relations avec `clinical_trials`
 Exemple de format d'output:
 
 > {'clinical_trials': './data/exposition/drugs_clinical_trials.json',
 > 'pubmed': './data/exposition/drugs_pubmed.json'}
- 1. La data exposition : on charge les fichiers json générés par l'étape précédentes et on les traite et fusionne pour généré le fichier json final contenant permettant de determiner les relations des drugs avec les journaux , les pubmed et les clinical_trials.
+ 1. La data exposition : On charge les fichiers json générés par l'étape précédentes et on les traite et fusionne pour générer le fichier json final permettant de determiner les relations des drugs avec les journaux , les pubmed et les clinical_trials.
 une observation dans le fichier json produit a le format ci-dessous:
 
     {"id_relation": "id_mention", "date", "journal","type", "drug_name', "drug_attcode"}
@@ -58,9 +58,9 @@ Le pipeline de données se repose sur le fichier de configuration se trouvant da
 Le fichier contient les paramètres de toutes les étapes de notre data pipeline.
 
 - **Data Preparation** :  Le code principal de ce traitement se trouve dans `lib/modules/data_prep/data_preparation_pipeline.py` : On commence par chercher les fichiers qui correspondent au regex du fichier de config, ensuite on exécute un pipeline de data_quality "assez basique" et enfin  on nettoie les données ( traitement des Nans, des types, des caractères spéciaux) .
-Ce traitement peut etre exécuté en parallèle/en chunk par type de fichiers ( drugs, clinical_trials, pubmed)
+Ce traitement peut etre exécuté en parallèle/en chunk par type de fichiers (drugs, clinical_trials, pubmed)
 - **Data transformation** : Le code principal de ce traitement se trouve dans `lib/modules/data_transformation/data_transformation_pipeline.py`. On se contente de traiter les les fichiers générés par la dataprep pour générer un json par type de relation ( "clinical_trials", "pubmed")
-- **Data Exposition** : Le code principal de ce traitement se trouve dans `/lib/modules/data_exposition/data_exposition_pipeline.py` : On récupère les données transformées, on le traite , fusionne et exporte sous un format json. On calcule ensuite les indicateurs de la section `4. Traitement ad-hoc`, dans notre cas c'est le journal contenant le plus de mentions d'articles différents
+- **Data Exposition** : Le code principal de ce traitement se trouve dans `/lib/modules/data_exposition/data_exposition_pipeline.py` : On récupère les données transformées, on les traite , fusionne et exporte sous un format json. On calcule ensuite les indicateurs de la section `4. Traitement ad-hoc`, dans notre cas c'est le journal contenant le plus de mentions d'articles différents
 
 ## 3- Comment exécuter le script
 Pour pouvoir executer le script :
@@ -89,7 +89,7 @@ Le fichier json se trouvera dans `./data/exposition/drugs_all_mentions.json` et 
 
  - Utiliser un mécanisme de mapreduce manuel : on découpe les fichiers sources ( pubmed et clinical_trials ) en plusieurs fichiers de taille gérable , on lance le traitement par fichiers  et on prévoit une brique de reduce et de fusion avant la couche d'exposition
  - On utilise des bibliothèques/framework de traitement parallèle des dataframes et des données : (Dask, Rapids, Numba), Pyspark
- - On utilise des outils cloud managés pour l'éxecution de étapes de workflow ( kubernetes, Dataflow ). A titre d'exemple, pour kubernetes,  on peut découper un gros fichier en plusieurs fichiers, indexer les fichiers dans une bases accessibles à tous  les pods de kubernetes : Ensuite déployer plusieurs jobs de traitement: chaque job prend une liste de fichiers, les traite et met à jour la base pour stocker le statut de traitement de chaque fichier
+ - On utilise des outils cloud managés pour l'éxecution des étapes de workflow ( kubernetes, Dataflow). Un service comme Dataflow gère tout le process de découpage et parallélisation de calcul. On peut également utiliser kubernetes,  on peut découper un gros fichier en plusieurs fichiers, indexer les fichiers avec leurs statuts( "pending", "processed","in progress"..) dans une base accessible à tous les pods de kubernetes, ensuite déployer plusieurs jobs de traitement: chaque job prend une liste de fichiers, les traite et met à jour la base pour stocker le statut de traitement de chaque fichier.
 
 Pour le traitement de millions de fichiers, il faut rendre les briques du pipeline le plus `stateless` possible et découpler au maximum les étapes ( architecture `micro-services` ) . Cela permettra d'utiliser des briques de traitement serverless par un/groupe de fichiers  ( lambda function, cloud function, cloud run ...).
 
